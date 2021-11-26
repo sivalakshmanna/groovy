@@ -9,8 +9,8 @@ pipeline{
                 println "cloning the code from other repo to my repo"
                 sh "ls -l"
                 sh "ls -lart ./*"
-                git branch = "${BRANCH_NAME}",
-                url:  "https://github.com/sivalakshmanna/boxfuse-sample-java-war-hello.git"
+                git branch: "${BRANCH_NAME}",
+                url: 'https://github.com/sivalakshmanna/boxfuse-sample-java-war-hello.git'
             }
         }
         stage("build the code"){
