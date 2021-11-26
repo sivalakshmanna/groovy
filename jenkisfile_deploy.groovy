@@ -37,7 +37,7 @@ pipeline{
                     ssh -o stricthostkeychecking=no -i /tmp/sivalakshmanna07.pem ec2-user@$ip "hostname"
                      # process "$i"
                     done
-                   
+                   '''
             }
         }
     }
