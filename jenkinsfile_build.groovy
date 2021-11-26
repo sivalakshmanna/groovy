@@ -1,7 +1,7 @@
 pipeline{
     agent any
     environment{
-        BRANCH = "$(env.BRANCH_NAME)"
+        BRANCH = "${env.BRANCH_NAME}"
     }
     stages{
         stage('clone the code'){
