@@ -3,7 +3,7 @@ pipeline{
    parameters {
     string(name: 'BRANCH_NAME', defaultValue: 'master', description: 'From which branch artifacts want to deploy?')
     string(name: 'BUILD_NUM', defaultValue: '', description: 'From which build number artifacts want to deploy?')
-    string(name: 'SERVER_IP', defaultValue: '', description: 'To  which want to deploy?')
+    string(name: 'SERVERIPS', defaultValue: '', description: 'To  which want to deploy?')
 
   }
     stages{
@@ -26,14 +26,14 @@ pipeline{
                 //sh "ssh -i /tmp/sivalakshmanna07.pem ec2-user@${SERVER_IP} \"systemctl status tomcat\""
                 //sh "scp -i /tmp/sivalakshmanna07.pem hello-${BUILD_NUM}.war  ec2-user@${SERVER_IP}:/var/lib/tomcat/webapps"
                 sh '''
-                    aws s3 cp s3://sivabandela/${BRANCH}/${BUILD}/hello-${BUILD}.war .
+                    aws s3 cp s3://sivabandela/${BRANCH_NAME}/${BUILD_NUM}/hello-${BUILD_NUM}.war .
                     ls -l
                     IFS=',' read -ra ADDR <<< "${SERVERIPS}"
                     for ip in \"${ADDR[@]}\"; 
                     do
                     echo $ip
                     echo "Here we can use scp command"
-                    scp -o stricthostkeychecking=no -i /tmp/sivalakshmanna07.pem hello-${BUILD}.war ec2-user@$ip:/var/lib/tomcat/webapps
+                    scp -o stricthostkeychecking=no -i /tmp/sivalakshmanna07.pem hello-${BUILD_NUM}.war ec2-user@$ip:/var/lib/tomcat/webapps
                     ssh -o stricthostkeychecking=no -i /tmp/sivalakshmanna07.pem ec2-user@$ip "hostname"
                      # process "$i"
                     done
